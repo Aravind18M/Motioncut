@@ -1,0 +1,52 @@
+class Quiz:
+    def __init__(self, questions):
+        self.questions = questions
+        self.score = 0
+
+    def display_question(self, question_num):
+        question = self.questions[question_num]['question']
+        options = self.questions[question_num]['options']
+        print(f"Question {question_num + 1}: {question}")
+        for i, option in enumerate(options):
+            print(f"{i + 1}. {option}")
+
+    def check_answer(self, question_num, user_answer):
+        correct_answer = self.questions[question_num]['answer']
+        if user_answer.lower() == correct_answer.lower():
+            print("Correct!")
+            self.score += 1
+        else:
+            print(f"Wrong! The correct answer is: {correct_answer}")
+
+    def run_quiz(self):
+        for i in range(len(self.questions)):
+            self.display_question(i)
+            user_input = input("Your answer (Enter option number): ")
+            if user_input.isdigit() and 1 <= int(user_input) <= len(self.questions[i]['options']):
+                self.check_answer(i, self.questions[i]['options'][int(user_input) - 1])
+            else:
+                print("Invalid input. Please enter a valid option number.")
+        print(f"Quiz completed! Your final score is: {self.score}/{len(self.questions)}")
+
+
+if __name__ == "__main__":
+    questions = [
+        {
+            'question': "What is the capital of India?",
+            'options': ["Paris", "London","Delhi", "Rome"],
+            'answer': "Delhi"
+        },
+        {
+            'question': "What is the largest ocean in the Earth?",
+            'options': ["Indian ocen", "Artic ", "Altantic ocean", "Pacific ocean"],
+            'answer': "Pacific ocean"
+        },
+        {
+            'question': "Which planet is called as the largest Planet?",
+            'options': ["Mars", "Venus", "Jupiter", "Mercury"],
+            'answer': "Jupiter"
+        }
+    ]
+
+    quiz = Quiz(questions)
+    quiz.run_quiz()
